@@ -1,7 +1,8 @@
 class LocationController < ApplicationController
   before_action :authenticate_user!, except: [:index, :show]
+  
   def index
-  	@locations = Location.all.order('Created_at DESC')
+  	@location = Location.all.order('Created_at DESC')
   end
 
   def new
@@ -9,9 +10,25 @@ class LocationController < ApplicationController
   end
 
   def edit
-    @location = Location.find(location[:id])
+    @location = Location.find(params[:id])
+  end
+  
+    def update
+    @location = Location.find(params[:id])
+    if @location.update(location_params)
+      redirect_to @location
+    else
+      render 'edit'
+    end
   end
 
+    def destroy
+        @location = Location.find(params[:id])
+        @location.destroy
+        
+        redirect_to location_path
+    end
+  
   def create
   	@location = current_user.locations.new(location_params)
 
@@ -20,29 +37,13 @@ class LocationController < ApplicationController
   end
 
   def show
-  	@location = Location.find(location[:id])
+  	@location = Location.find(params[:id])
   end
 
-  def update
-    @location = Location.find(location[:id])
-
-    if @location.update(location_params)
-      redirect_to @location
-    else
-      render 'edit'
-    end
-  end
-
-  def destroy
-    @location = Location.find(location[:id])
-    @location.destroy
-    
-    redirect_to location_path
-end
-  
   
   private
   def location_params
-    location.require(:location).permit(:name)
+    params.require(:location).permit(:name)
   end
+
 end

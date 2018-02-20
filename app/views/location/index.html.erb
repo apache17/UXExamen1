@@ -1,4 +1,4 @@
-<% @locations.each do |location| %> 
+<% @location.each do |location| %> 
 <strong></strong>
 	<h4>Location: <%= location.name%></h4> <%= link_to "Edit", location %> | <%= link_to "Delete", location, method: :delete, data: {confirm: 'Are you sure?'} %>
 
