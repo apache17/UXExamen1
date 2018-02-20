@@ -1,23 +1,23 @@
 <div class="row">
   <div class="col-md-7 col-md-offset-2">
-    <h3><%= @location.title %></h3>
+    <h3><%= @location.name %></h3>
 
     <p>
         Submitted <%= time_ago_in_words(@location.created_at) %> Ago
         
         <% if (user_signed_in? && current_user.id == @location.user_id) %>
         
-          | <%= link_to "Edit", edit_location_path(@location) %> 
+          | <%= link_to "Edit", (@location) %> 
           | <%= link_to "Delete", location_path(@location), method: :delete, 
                 data: {confirm: 'Are you sure?'} %>
         <% end %>
     </p>
     <div>
-      <h5><%= @location.recording.count %> Comments</h5>
+      <h5><%= @location.recording.count %> Recordings</h5>
       <hr>
       <%= render @location.recording %>
       
-      <h6>Add a comment</h6>
+      <h6>Add a Recording</h6>
       <%= render 'recording/form' %>
     </div>
   </div>
